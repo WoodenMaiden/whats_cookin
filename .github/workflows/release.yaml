@@ -1,0 +1,30 @@
+# This action will run tests, build and export the app -> TBD maybe fdroid
+
+name: tag
+
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+  pull_request:
+    branches: [ master ]
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Flutter
+        uses: britannio/action-install-flutter@v1
+        with:
+          version: $FLUTTER_VERSION
+      - name: Get Packages
+        run: flutter pub get
+      - name: Run Tests
+        run: flutter test --no-pub
+
+# to complete
